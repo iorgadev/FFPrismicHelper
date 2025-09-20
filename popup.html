@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      width: 200px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+    }
+    .header {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .counter {
+      font-size: 32px;
+      font-weight: bold;
+      color: #00ff88;
+      text-align: center;
+      margin: 15px 0;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .label {
+      text-align: center;
+      color: #ffffff;
+      font-size: 14px;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    .not-available {
+      color: #ffcc00;
+      font-style: italic;
+      text-align: center;
+      margin: 20px 0;
+      background: rgba(255,204,0,0.2);
+      border-radius: 8px;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">FF Prismic Helper</div>
+  <div class="label">Slices Counter</div>
+  <div class="counter" id="sliceCount">Loading...</div>
+  <script src="popup.js"></script>
+</body>
+</html>

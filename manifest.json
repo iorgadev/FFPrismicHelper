@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+  "name": "FF Prismic Helper",
+  "version": "1.0",
+  "description": "Shows slice counter on Prismic builder pages",
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.prismic.io/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "browser_action": {
+    "default_title": "FF Prismic Helper",
+    "default_popup": "popup.html"
+  }
+}
