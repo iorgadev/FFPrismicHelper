@@ -47,7 +47,7 @@ function applyFieldsetStyling(fieldset, colorIndex) {
 function applySliceTableStyling(listItem, colorIndex) {
   const colors = colorPalette[colorIndex % colorPalette.length];
   
-  listItem.style.setProperty('border-left', `4px solid ${colors.border}`, 'important');
+  listItem.style.setProperty('border', `2px solid ${colors.border}`, 'important');
   listItem.style.setProperty('background-color', `${colors.header}20`, 'important');
   listItem.style.setProperty('margin', '2px 0', 'important');
   listItem.style.setProperty('padding', '8px 12px', 'important');
@@ -71,7 +71,7 @@ function applyAllSliceTableStyling() {
   }
   
   // Look for slice table li elements (commonly found in sidebar)
-  const sliceTableItems = document.querySelectorAll('li[data-slice], li[data-testid*="slice"], .slice-table li, [data-testid="slice-table"] li');
+  const sliceTableItems = document.querySelectorAll('li[data-slice], li[data-testid*="slice"], .slice-table li, [data-testid="slice-table"] li, ul[aria-label="Slice Table"] li');
   let colorIndex = 0;
   
   sliceTableItems.forEach(listItem => {
@@ -124,10 +124,38 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-// Auto-apply styling when page loads
-console.log('FF Prismic Helper loaded');
-if (isPrismicBuilderPage()) {
+// Function to apply all styling
+function applyAllStyling() {
+  if (!isPrismicBuilderPage()) {
+    return;
+  }
+  
   const fieldsetCount = applyAllFieldsetStyling();
   const sliceTableCount = applyAllSliceTableStyling();
   console.log(`FF Prismic Helper: Applied styling to ${fieldsetCount} fieldset slices and ${sliceTableCount} slice table items`);
 }
+
+// Auto-apply styling when page loads
+console.log('FF Prismic Helper loaded');
+
+// Apply immediately if page is already loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyAllStyling);
+} else {
+  applyAllStyling();
+}
+
+// Also apply after a short delay to catch dynamically loaded content
+setTimeout(applyAllStyling, 1000);
+
+// Watch for dynamic content changes
+const observer = new MutationObserver(() => {
+  if (isPrismicBuilderPage()) {
+    applyAllStyling();
+  }
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
+});
